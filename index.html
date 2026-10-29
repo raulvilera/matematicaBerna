@@ -10,31 +10,52 @@
   body { font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: var(--bg); margin: 0; padding: 24px; }
   .folha { max-width: 820px; margin: 0 auto; background: #fff; padding: 32px 40px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
   .escola { text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 20px; }
-  .cabecalho { display: grid; grid-template-columns: 1fr 200px; gap: 14px 20px; align-items: end; margin-bottom: 14px; }
+  .cabecalho { display: grid; grid-template-columns: 200px 1fr 160px; gap: 14px 20px; align-items: end; margin-bottom: 14px; }
   .campo { display: flex; flex-direction: column; font-size: 14px; }
   .campo label { font-weight: bold; margin-bottom: 4px; }
   .campo select, .campo input { padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; background: #fff; }
+  .campo select:disabled { background: #eef1f6; }
   .campo input[readonly] { background: #eef1f6; color: var(--muted); }
   .data-campo { grid-column: 1 / 2; }
   .data-campo input { width: 220px; }
   h1 { text-align: center; font-size: 19px; margin: 26px 0 22px; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 10px 0; }
+
+  /* Área das questões com fundo em degradê azul → azul escuro */
+  .area-questoes {
+    background: linear-gradient(160deg, #3b8fe0 0%, #1f5fb0 50%, #0b2f6b 100%);
+    border-radius: 10px;
+    padding: 24px 28px 14px;
+    color: #ffffff;
+  }
   .questao { margin-bottom: 22px; }
-  .questao h3 { font-size: 15px; margin: 0 0 6px; color: var(--accent); }
+  .questao h3 { font-size: 15px; margin: 0 0 6px; color: #ffe27a; }
   .questao p { margin: 4px 0; font-size: 14.5px; line-height: 1.5; }
   .linha-resp { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 8px 0 0 6px; font-size: 14px; }
   .linha-resp label { display: flex; align-items: center; gap: 6px; }
-  .linha-resp input { width: 110px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+  .linha-resp input { width: 110px; padding: 6px 8px; border: 1px solid #ffffff80; border-radius: 4px; font-size: 14px; color: var(--ink); background: #fff; }
   .sub { font-size: 14px; margin: 8px 0 0 6px; display: flex; flex-direction: column; gap: 6px; }
   .sub label { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .sub input { width: 120px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+  .sub input { width: 120px; padding: 6px 8px; border: 1px solid #ffffff80; border-radius: 4px; font-size: 14px; color: var(--ink); background: #fff; }
+
   .acoes { text-align: center; margin-top: 28px; }
   button { background: var(--accent); color: #fff; border: none; padding: 12px 34px; font-size: 16px; border-radius: 6px; cursor: pointer; }
   button:disabled { background: #97a6bf; cursor: wait; }
   .aviso { margin-top: 14px; font-size: 14px; text-align: center; min-height: 20px; }
   .erro { color: #b3261e; }
   .ok { color: #1e7a3c; font-weight: bold; }
-  @media print { .acoes, .aviso { display: none; } body { background: #fff; padding: 0; } .folha { box-shadow: none; } }
-  @media (max-width: 640px) { .cabecalho { grid-template-columns: 1fr; } .data-campo input { width: 100%; } .folha { padding: 20px; } }
+
+  @media print {
+    .acoes, .aviso { display: none; }
+    body { background: #fff; padding: 0; }
+    .folha { box-shadow: none; }
+    .area-questoes { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @media (max-width: 640px) {
+    .cabecalho { grid-template-columns: 1fr; }
+    .data-campo input { width: 100%; }
+    .folha { padding: 20px; }
+    .area-questoes { padding: 16px; }
+  }
 </style>
 </head>
 <body>
@@ -44,8 +65,12 @@
 
   <div class="cabecalho">
     <div class="campo">
+      <label for="turma">Turma:</label>
+      <select id="turma"></select>
+    </div>
+    <div class="campo">
       <label for="nome">Nome:</label>
-      <select id="nome"><option value="">Carregando lista...</option></select>
+      <select id="nome" disabled><option value="">Selecione primeiro a turma</option></select>
     </div>
     <div class="campo">
       <label for="serie">Série:</label>
@@ -59,49 +84,53 @@
 
   <h1>Atividade de Matemática (4º Bimestre)</h1>
 
-  <section class="questao">
-    <h3>1. Cálculo simples de porcentagem</h3>
-    <p>Quanto é:</p>
-    <div class="sub">
-      <label>a) 10% de 250 = <input type="text" inputmode="decimal" data-id="1a"></label>
-      <label>b) 25% de 400 = <input type="text" inputmode="decimal" data-id="1b"></label>
-      <label>c) 50% de 860 = <input type="text" inputmode="decimal" data-id="1c"></label>
-      <label>d) 20% de 150 = <input type="text" inputmode="decimal" data-id="1d"></label>
-    </div>
-  </section>
+  <div class="area-questoes">
 
-  <section class="questao">
-    <h3>2. Desconto em compras</h3>
-    <p>Uma blusa custa R$ 80,00. Na liquidação, ela está com 20% de desconto. Qual é o valor do desconto e quanto você vai pagar pela blusa?</p>
-    <div class="linha-resp">
-      <label>Valor do desconto: R$ <input type="text" inputmode="decimal" data-id="2a"></label>
-      <label>Valor a pagar: R$ <input type="text" inputmode="decimal" data-id="2b"></label>
-    </div>
-  </section>
+    <section class="questao">
+      <h3>1. Cálculo simples de porcentagem</h3>
+      <p>Quanto é:</p>
+      <div class="sub">
+        <label>a) 10% de 250 = <input type="text" inputmode="decimal" data-id="1a"></label>
+        <label>b) 25% de 400 = <input type="text" inputmode="decimal" data-id="1b"></label>
+        <label>c) 50% de 860 = <input type="text" inputmode="decimal" data-id="1c"></label>
+        <label>d) 20% de 150 = <input type="text" inputmode="decimal" data-id="1d"></label>
+      </div>
+    </section>
 
-  <section class="questao">
-    <h3>3. Acréscimo (Aumento)</h3>
-    <p>O preço de um lanche era R$ 25,00 e sofreu um aumento de 10%. Qual é o novo preço do lanche?</p>
-    <div class="linha-resp">
-      <label>Novo preço: R$ <input type="text" inputmode="decimal" data-id="3"></label>
-    </div>
-  </section>
+    <section class="questao">
+      <h3>2. Desconto em compras</h3>
+      <p>Uma blusa custa R$ 80,00. Na liquidação, ela está com 20% de desconto. Qual é o valor do desconto e quanto você vai pagar pela blusa?</p>
+      <div class="linha-resp">
+        <label>Valor do desconto: R$ <input type="text" inputmode="decimal" data-id="2a"></label>
+        <label>Valor a pagar: R$ <input type="text" inputmode="decimal" data-id="2b"></label>
+      </div>
+    </section>
 
-  <section class="questao">
-    <h3>4. Encontrando a porcentagem</h3>
-    <p>Em uma turma de 40 alunos, 10 faltaram em uma sexta-feira. Qual foi a porcentagem de alunos que faltaram?</p>
-    <div class="linha-resp">
-      <label>Porcentagem: <input type="text" inputmode="decimal" data-id="4"> %</label>
-    </div>
-  </section>
+    <section class="questao">
+      <h3>3. Acréscimo (Aumento)</h3>
+      <p>O preço de um lanche era R$ 25,00 e sofreu um aumento de 10%. Qual é o novo preço do lanche?</p>
+      <div class="linha-resp">
+        <label>Novo preço: R$ <input type="text" inputmode="decimal" data-id="3"></label>
+      </div>
+    </section>
 
-  <section class="questao">
-    <h3>5. Situação do dia a dia</h3>
-    <p>Em uma conta de restaurante no valor de R$ 120,00, foi cobrado 10% de taxa de serviço (gorjeta). Qual o valor total pago com a taxa?</p>
-    <div class="linha-resp">
-      <label>Valor total: R$ <input type="text" inputmode="decimal" data-id="5"></label>
-    </div>
-  </section>
+    <section class="questao">
+      <h3>4. Encontrando a porcentagem</h3>
+      <p>Em uma turma de 40 alunos, 10 faltaram em uma sexta-feira. Qual foi a porcentagem de alunos que faltaram?</p>
+      <div class="linha-resp">
+        <label>Porcentagem: <input type="text" inputmode="decimal" data-id="4"> %</label>
+      </div>
+    </section>
+
+    <section class="questao">
+      <h3>5. Situação do dia a dia</h3>
+      <p>Em uma conta de restaurante no valor de R$ 120,00, foi cobrado 10% de taxa de serviço (gorjeta). Qual o valor total pago com a taxa?</p>
+      <div class="linha-resp">
+        <label>Valor total: R$ <input type="text" inputmode="decimal" data-id="5"></label>
+      </div>
+    </section>
+
+  </div>
 
   <div class="acoes">
     <button id="enviar" type="button">Enviar respostas</button>
@@ -150,31 +179,43 @@
     ]
   };
 
+  const selTurma = document.getElementById('turma');
   const selNome = document.getElementById('nome');
   const inpSerie = document.getElementById('serie');
   const inpData = document.getElementById('data');
   const btn = document.getElementById('enviar');
   const aviso = document.getElementById('aviso');
 
-  // Monta a lista de nomes agrupada por turma
-  selNome.innerHTML = '<option value="">Selecione seu nome</option>';
+  // 1) Lista de turmas
+  selTurma.innerHTML = '<option value="">Selecione sua turma</option>';
   Object.keys(TURMAS).forEach(turma => {
-    const grupo = document.createElement('optgroup');
-    grupo.label = turma;
-    TURMAS[turma].slice().sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(nome => {
-      const op = document.createElement('option');
-      op.value = nome;
-      op.textContent = nome;
-      op.dataset.serie = turma;
-      grupo.appendChild(op);
-    });
-    selNome.appendChild(grupo);
+    const op = document.createElement('option');
+    op.value = turma;
+    op.textContent = turma;
+    selTurma.appendChild(op);
   });
 
-  // Série preenchida automaticamente a partir do nome escolhido
-  selNome.addEventListener('change', () => {
-    const op = selNome.selectedOptions[0];
-    inpSerie.value = op && op.dataset.serie ? op.dataset.serie : '';
+  // 2) Ao escolher a turma, preenche a Série e carrega os nomes dessa turma
+  selTurma.addEventListener('change', () => {
+    const turma = selTurma.value;
+    inpSerie.value = turma;
+    selNome.innerHTML = '';
+    if (!turma) {
+      selNome.innerHTML = '<option value="">Selecione primeiro a turma</option>';
+      selNome.disabled = true;
+      return;
+    }
+    selNome.innerHTML = '<option value="">Selecione seu nome</option>';
+    TURMAS[turma]
+      .slice()
+      .sort((a, b) => a.localeCompare(b, 'pt-BR'))
+      .forEach(nome => {
+        const op = document.createElement('option');
+        op.value = nome;
+        op.textContent = nome;
+        selNome.appendChild(op);
+      });
+    selNome.disabled = false;
   });
 
   // Máscara simples para a data
@@ -191,10 +232,12 @@
   }
 
   btn.addEventListener('click', async () => {
+    const turma = selTurma.value;
     const nome = selNome.value;
     const serie = inpSerie.value;
     const data = inpData.value.trim();
 
+    if (!turma) return mostrarAviso('Selecione sua turma.', 'erro');
     if (!nome) return mostrarAviso('Selecione seu nome na lista.', 'erro');
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(data)) return mostrarAviso('Preencha a data no formato dd/mm/aaaa.', 'erro');
 
