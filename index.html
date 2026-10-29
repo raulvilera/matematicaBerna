@@ -78,7 +78,7 @@
     </div>
     <div class="campo data-campo">
       <label for="data">Data:</label>
-      <input id="data" type="text" placeholder="dd/mm/aaaa" maxlength="10" inputmode="numeric">
+      <input id="data" type="text" readonly>
     </div>
   </div>
 
@@ -218,13 +218,13 @@
     selNome.disabled = false;
   });
 
-  // Máscara simples para a data
-  inpData.addEventListener('input', () => {
-    let v = inpData.value.replace(/\D/g, '').slice(0, 8);
-    if (v.length > 4) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
-    else if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
-    inpData.value = v;
-  });
+  // Data automática: preenche com o dia de hoje (dd/mm/aaaa)
+  (function () {
+    const h = new Date();
+    inpData.value = String(h.getDate()).padStart(2, '0') + '/' +
+                    String(h.getMonth() + 1).padStart(2, '0') + '/' +
+                    h.getFullYear();
+  })();
 
   function mostrarAviso(msg, classe) {
     aviso.className = 'aviso ' + (classe || '');
