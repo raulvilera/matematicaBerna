@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade de Matemática - 4º Bimestre</title>
+<style>
+  :root { --ink:#1d2330; --muted:#5b6270; --accent:#2b5ea7; --line:#c9ced8; --bg:#f2f4f8; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color: var(--ink); background: var(--bg); margin: 0; padding: 24px; }
+  .folha { max-width: 820px; margin: 0 auto; background: #fff; padding: 32px 40px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+  .escola { text-align: center; font-weight: bold; font-size: 16px; margin-bottom: 20px; }
+  .cabecalho { display: grid; grid-template-columns: 1fr 200px; gap: 14px 20px; align-items: end; margin-bottom: 14px; }
+  .campo { display: flex; flex-direction: column; font-size: 14px; }
+  .campo label { font-weight: bold; margin-bottom: 4px; }
+  .campo select, .campo input { padding: 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; background: #fff; }
+  .campo input[readonly] { background: #eef1f6; color: var(--muted); }
+  .data-campo { grid-column: 1 / 2; }
+  .data-campo input { width: 220px; }
+  h1 { text-align: center; font-size: 19px; margin: 26px 0 22px; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 10px 0; }
+  .questao { margin-bottom: 22px; }
+  .questao h3 { font-size: 15px; margin: 0 0 6px; color: var(--accent); }
+  .questao p { margin: 4px 0; font-size: 14.5px; line-height: 1.5; }
+  .linha-resp { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 8px 0 0 6px; font-size: 14px; }
+  .linha-resp label { display: flex; align-items: center; gap: 6px; }
+  .linha-resp input { width: 110px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+  .sub { font-size: 14px; margin: 8px 0 0 6px; display: flex; flex-direction: column; gap: 6px; }
+  .sub label { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .sub input { width: 120px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-size: 14px; }
+  .acoes { text-align: center; margin-top: 28px; }
+  button { background: var(--accent); color: #fff; border: none; padding: 12px 34px; font-size: 16px; border-radius: 6px; cursor: pointer; }
+  button:disabled { background: #97a6bf; cursor: wait; }
+  .aviso { margin-top: 14px; font-size: 14px; text-align: center; min-height: 20px; }
+  .erro { color: #b3261e; }
+  .ok { color: #1e7a3c; font-weight: bold; }
+  @media print { .acoes, .aviso { display: none; } body { background: #fff; padding: 0; } .folha { box-shadow: none; } }
+  @media (max-width: 640px) { .cabecalho { grid-template-columns: 1fr; } .data-campo input { width: 100%; } .folha { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="folha">
+
+  <div class="escola">E.E. Profª Wanda Mascagni de Sá.</div>
+
+  <div class="cabecalho">
+    <div class="campo">
+      <label for="nome">Nome:</label>
+      <select id="nome"><option value="">Carregando lista...</option></select>
+    </div>
+    <div class="campo">
+      <label for="serie">Série:</label>
+      <input id="serie" type="text" readonly placeholder="Automático">
+    </div>
+    <div class="campo data-campo">
+      <label for="data">Data:</label>
+      <input id="data" type="text" placeholder="dd/mm/aaaa" maxlength="10" inputmode="numeric">
+    </div>
+  </div>
+
+  <h1>Atividade de Matemática (4º Bimestre)</h1>
+
+  <section class="questao">
+    <h3>1. Cálculo simples de porcentagem</h3>
+    <p>Quanto é:</p>
+    <div class="sub">
+      <label>a) 10% de 250 = <input type="text" inputmode="decimal" data-id="1a"></label>
+      <label>b) 25% de 400 = <input type="text" inputmode="decimal" data-id="1b"></label>
+      <label>c) 50% de 860 = <input type="text" inputmode="decimal" data-id="1c"></label>
+      <label>d) 20% de 150 = <input type="text" inputmode="decimal" data-id="1d"></label>
+    </div>
+  </section>
+
+  <section class="questao">
+    <h3>2. Desconto em compras</h3>
+    <p>Uma blusa custa R$ 80,00. Na liquidação, ela está com 20% de desconto. Qual é o valor do desconto e quanto você vai pagar pela blusa?</p>
+    <div class="linha-resp">
+      <label>Valor do desconto: R$ <input type="text" inputmode="decimal" data-id="2a"></label>
+      <label>Valor a pagar: R$ <input type="text" inputmode="decimal" data-id="2b"></label>
+    </div>
+  </section>
+
+  <section class="questao">
+    <h3>3. Acréscimo (Aumento)</h3>
+    <p>O preço de um lanche era R$ 25,00 e sofreu um aumento de 10%. Qual é o novo preço do lanche?</p>
+    <div class="linha-resp">
+      <label>Novo preço: R$ <input type="text" inputmode="decimal" data-id="3"></label>
+    </div>
+  </section>
+
+  <section class="questao">
+    <h3>4. Encontrando a porcentagem</h3>
+    <p>Em uma turma de 40 alunos, 10 faltaram em uma sexta-feira. Qual foi a porcentagem de alunos que faltaram?</p>
+    <div class="linha-resp">
+      <label>Porcentagem: <input type="text" inputmode="decimal" data-id="4"> %</label>
+    </div>
+  </section>
+
+  <section class="questao">
+    <h3>5. Situação do dia a dia</h3>
+    <p>Em uma conta de restaurante no valor de R$ 120,00, foi cobrado 10% de taxa de serviço (gorjeta). Qual o valor total pago com a taxa?</p>
+    <div class="linha-resp">
+      <label>Valor total: R$ <input type="text" inputmode="decimal" data-id="5"></label>
+    </div>
+  </section>
+
+  <div class="acoes">
+    <button id="enviar" type="button">Enviar respostas</button>
+  </div>
+  <div id="aviso" class="aviso"></div>
+</div>
+
+<script>
+  // ============================================================
+  // CONFIGURAÇÃO: cole aqui a URL do Web App do Apps Script
+  // (veja o arquivo apps_script_Code.gs e as instruções de publicação)
+  // ============================================================
+  const APPS_SCRIPT_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
+
+  // Nomes extraídos das listas de chamada (planilhas "2ªSérie C" e "3ªSérie F")
+  const TURMAS = {
+    "2ª Série C": [
+      "ERIK TAVARES AUGUSTO", "ALICIA KEMILLY SULINO REIS", "INARA BEZERRA DA SILVA",
+      "LUCAS PERES DE SOUZA", "MATHEUS FELIPE SILVA SOUZA", "GUILHERME FAGUNDES DE ARAUJO",
+      "LARA BARROS DA SILVA", "PEDRO PAULO DE SOUZA NEVES", "MARIANA LOPES GRAÇA",
+      "DESIREE RODRIGUES DE AMORIM", "PEDRO HENRIQUE BARRETO REGIS", "MARIA EDUARDA CHAGAS GONÇALVES",
+      "ASHELEY DE PAULA PEREIRA GARCIA", "MARIAH EDUARDA PEDROSO MARTINS", "MIRELA DE OLIVEIRA MARTINS",
+      "GABRIEL FREITAS DE BARROS", "YASMIN VITORIA SIQUEIRA FERNANDES", "LUIZA AVELA ORTEGA",
+      "BARBARA VITÓRIA SANTOS SOUZA", "ANA CLARA FERNANDES DA SILVA", "KAIQUE SORACE MOTA SILVA",
+      "DAVÍ ALMEIDA LIMA", "PEDRO HENRIQUE VITORINO TOMAZ DOS SANTOS", "PABLO VINICIUS SILVA DE LIMA",
+      "LUANA DA SILVA ROCHA DOS SANTOS", "CARLOS EDUARDO DE FREITAS PINHEIRO LOPES", "ANDRÉ RICARDO BUENO EMILIO FILHO",
+      "GUILHERME XAVIER DE MACÊDO", "LAIS MIKAELLY ROCHA SILVA", "VITOR DORICE DOS SANTOS",
+      "HELIO HENRIQUE LAMBERT VIEIRA", "MARCOS VINICIUS DE SOUZA ALVES", "ISABELLA DE SOUZA BARROS",
+      "ANA BEATRIZ OLIVEIRA ALVES", "JAQUELINE LEMOS CUNHA DE AMORIM", "GIOVANNA SOUZA DE ALBUQUERQUE",
+      "ARTHUR RIBEIRO SOARES LUZ", "SAMUEL RIBEIRO SOARES LUZ", "PEDRO HENRIQUE CORDEIRO MACEDO"
+    ],
+    "3ª Série F": [
+      "JOAO VICTOR DE CARVALHO SANTOS", "KAUANY COSTA HELUANY", "MANUELA TELES DE OLIVEIRA",
+      "PEDRO MIGUEL ALMEIDA DO NASCIMENTO", "WILLIAN ROBERTO DUARTE", "ANA JULIA ROCHA DE JESUS",
+      "IASMIN DE SOUZA ALBERTO", "EMILLY FERNANDES", "AYSHILLA PEREIRA DOS SANTOS",
+      "YAGO COLDI BELI AZEVEDO DA SILVA", "JOÃO MANOEL DO NASCIMENTO MENEZES", "MAISSA QUERCIA GALLO",
+      "GABRIEL RONDINI DA SILVA", "JOAO MARCOS DANTAS DA SILVA", "YASMIN CABRAL KELER DOMINGUES",
+      "LUDIMILA NEVES DA SILVA", "GABRIEL FELIPO DE MORAIS", "ANA JÚLLIA LIMA CLAUDIO",
+      "PEDRO HENRIQUE FAGUNDES DE LIMA", "MIKAELLI PARMEGIANI MATHIAS", "MIGUEL DE OLIVEIRA AQUINO",
+      "LUDMILA SILVA FELICIANO", "ANDRE FRANCESCHINI SOARES", "HYAGO SANTOS XAVIER",
+      "JULIA DARRIBA CESTARI", "MARIA CLARA COSTA MARTINS", "LEONARDO RIKELME NUNES",
+      "JULIA DE CASTRO CARDOSO", "MYLLENA CARDOZO FERREIRA", "JULIANA CRISTINA ARAUJO OLIVEIRA",
+      "LOHAYNI VICTORIA TAVARES DOS SANTOS", "BRENO APARECIDO DE SOUSA NASCIMENTO", "RAISSA VITORIA LENARES SANTOS",
+      "MATHEUS CRISTHOFER OLIVEIRA DE SOUZA RAMOS", "IAGO FELIPE SANDRIN BERTIN", "MANUELA LEDIER DE ABREU",
+      "GUSTAVO HENRIQUE FIGUEREDO CARVALHO", "PABLO HENRIQUE DA PAIXÃO TEIXEIRA", "YGOR BRYAN SILVA OLIVEIRA"
+    ]
+  };
+
+  const selNome = document.getElementById('nome');
+  const inpSerie = document.getElementById('serie');
+  const inpData = document.getElementById('data');
+  const btn = document.getElementById('enviar');
+  const aviso = document.getElementById('aviso');
+
+  // Monta a lista de nomes agrupada por turma
+  selNome.innerHTML = '<option value="">Selecione seu nome</option>';
+  Object.keys(TURMAS).forEach(turma => {
+    const grupo = document.createElement('optgroup');
+    grupo.label = turma;
+    TURMAS[turma].slice().sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(nome => {
+      const op = document.createElement('option');
+      op.value = nome;
+      op.textContent = nome;
+      op.dataset.serie = turma;
+      grupo.appendChild(op);
+    });
+    selNome.appendChild(grupo);
+  });
+
+  // Série preenchida automaticamente a partir do nome escolhido
+  selNome.addEventListener('change', () => {
+    const op = selNome.selectedOptions[0];
+    inpSerie.value = op && op.dataset.serie ? op.dataset.serie : '';
+  });
+
+  // Máscara simples para a data
+  inpData.addEventListener('input', () => {
+    let v = inpData.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length > 4) v = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+    else if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
+    inpData.value = v;
+  });
+
+  function mostrarAviso(msg, classe) {
+    aviso.className = 'aviso ' + (classe || '');
+    aviso.textContent = msg;
+  }
+
+  btn.addEventListener('click', async () => {
+    const nome = selNome.value;
+    const serie = inpSerie.value;
+    const data = inpData.value.trim();
+
+    if (!nome) return mostrarAviso('Selecione seu nome na lista.', 'erro');
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(data)) return mostrarAviso('Preencha a data no formato dd/mm/aaaa.', 'erro');
+
+    const respostas = {};
+    const campos = document.querySelectorAll('[data-id]');
+    for (const c of campos) {
+      const v = c.value.trim();
+      if (!v) {
+        c.focus();
+        return mostrarAviso('Responda todas as questões antes de enviar.', 'erro');
+      }
+      respostas[c.dataset.id] = v;
+    }
+
+    if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith('COLE_AQUI')) {
+      return mostrarAviso('A URL do Apps Script ainda não foi configurada no arquivo.', 'erro');
+    }
+
+    btn.disabled = true;
+    mostrarAviso('Enviando...');
+
+    const payload = { nome, serie, data, respostas };
+    try {
+      // text/plain evita bloqueio de CORS no Apps Script
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      mostrarAviso('Respostas registradas com sucesso! Pode fechar a página.', 'ok');
+      btn.textContent = 'Enviado';
+    } catch (err) {
+      btn.disabled = false;
+      mostrarAviso('Erro ao enviar. Verifique sua conexão e tente novamente.', 'erro');
+    }
+  });
+</script>
+</body>
+</html>
